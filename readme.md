@@ -1,4 +1,4 @@
-# R and Python Project – Master’s Internship
+# R and Python Project – Master’s Internship Alizée Martin
 
 # Plantar block and early gait stability after hallux valgus surgery
 
@@ -14,7 +14,6 @@ The **plantar block** is a locoregional anesthesia technique that targets the se
 
 The question is: does the plantar block allow early walking without affecting gait stability?
 
----
 
 ### 1.2. Aim
 
@@ -22,7 +21,6 @@ The aim of this project is to compare a group with a plantar block and a control
 
 The analysis is based on one main variable: the **mean double support time**, used as an indicator of stability.
 
----
 
 ### 1.3. Method
 
@@ -33,7 +31,6 @@ Gait data were collected using the **GAITERITE** system. Two datasets were used:
 
 These datasets were merged and cleaned using Python, then analyzed using R.
 
----
 
 ### 1.4. Participants
 
@@ -44,7 +41,6 @@ Patients were divided into two groups:
 - plantar block group  
 - control group  
 
----
 
 ### 1.5. Outcome measure
 
@@ -54,7 +50,6 @@ Double support is the phase of walking when both feet are on the ground. It is c
 
 It is calculated as the average of the left and right double support times.
 
----
 
 ## 2. Python project
 
@@ -72,7 +67,6 @@ Then, I created the main variable of the study, the mean double support time (`D
 
 Finally, I simplified the dataset by keeping only the useful variables (patient ID, group, surgical side and double support variables), and exported the final dataset (`results.csv`), which was used in R.
 
----
 
 ### 2.2. Data organization
 
@@ -88,7 +82,6 @@ Main variables used:
 
 Only rows marked as **VALIDE** were kept.
 
----
 
 #### 2.2.2. Randomization data
 
@@ -104,7 +97,6 @@ This variable indicates the group of each patient:
 
 This variable is important because it allows comparison between groups.
 
----
 
 ### 2.3. Script organization
 
@@ -123,7 +115,6 @@ Variables kept:
 - `CoteChir`  
 - `DoubleSupport_mean`  
 
----
 
 ## 3. RStudio Project
 
@@ -133,7 +124,6 @@ The objective of the R part is to analyze the mean double support time in order 
 
 R was used for statistical analysis because it is well adapted for descriptive statistics, visualization and effect size calculation.
 
----
 
 ### 3.2. Data organization
 
@@ -147,10 +137,10 @@ Variables:
 - `DoubleSupport_G` : left double support time  
 - `DoubleSupport_D` : right double support time  
 - `DoubleSupport_mean` : mean double support time  
----
+
 
 ### 3.3. Script organization
-``
+
 
 #### 3.3.1. Descriptive analysis
 
@@ -158,15 +148,11 @@ Variables:
 - Input: `results.csv`  
 - Output: mean, standard deviation, sample size  
 
----
-
 #### 3.3.2. Visualization
 
 - Aim: visualize data distribution  
 - Input: `results.csv`  
 - Output: boxplot  
-
----
 
 #### 3.3.3. Effect size
 
@@ -174,7 +160,6 @@ Variables:
 - Input: `results.csv`  
 - Output: Cohen’s d  
 
----
 
 ### 3.4. Conclusion
 
@@ -188,7 +173,6 @@ These results suggest that the plantar block does not negatively affect gait sta
 
 The mean double support time seems to be a good indicator to evaluate gait stability after surgery and could be useful for patient follow-up.
 
----
 
 ## 4. References
 

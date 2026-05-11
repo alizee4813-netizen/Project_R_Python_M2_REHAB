@@ -26,8 +26,6 @@ The project is available on GitHub at this link:
 
 ### 1.1. Context
 
-### 1.1. Context
-
 Hallux valgus surgery is more and more done in an outpatient setting and follows ERAS (Enhanced Recovery After Surgery) protocols. In this context, early walking is very important because it helps patients become independent again and reduces complications linked to immobility.
 
 Peripheral nerve blocks are often used to improve pain after surgery. However, depending on how they spread, some techniques can affect sensation or motor function, which may slow down walking recovery. In particular, a loss of foot sensitivity can affect weight-bearing and gait stability.
@@ -44,29 +42,30 @@ The analysis is based on one main variable: the **mean double support time**, us
 
 ### 1.3. Method
 
-Gait data were collected using the GAITERITE system.
+Gait data were collected using the **GAITERITE** system. Two datasets were used:
 
-Two datasets were used:
-Equipements patients
-- gait parameters  
-- randomization data  
+- one with gait parameters : `GAITERITE.csv`
+- one with randomization data : `RANDO.csv`
 
 These datasets were merged and cleaned using Python, then analyzed using R.
 
 ### 1.4. Participants
 
-Patients undergoing hallux valgus surgery were included.
+The dataset includes patients who had hallux valgus surgery.
 
-Two groups:
+Patients were divided into two groups:
 
-- Plantar block group  
-- Control group  
+- plantar block group  
+- control group  
+
 
 ### 1.5. Outcome measure
 
 The main variable is the **mean double support time**.
 
-It corresponds to the phase where both feet are on the ground and is used as an indicator of gait stability.
+Double support is the phase of walking when both feet are on the ground. It is commonly used as an indicator of stability.
+
+It is calculated as the average of the left and right double support times.
 
 ## **2. Aim of the code**
 
@@ -169,7 +168,7 @@ ggplot(df, aes(x = Group, y = DoubleSupport_mean, fill = Group)) +
   geom_jitter(width = 0.1, size = 2, alpha = 0.6) +
   stat_summary(fun = mean, geom = "point", shape = 18, size = 4, color = "red") +
   
-  # ajout du n
+  # add number of observations as text above each box
   stat_summary(
     fun.data = function(x) {
       data.frame(y = max(x) + 0.2, label = paste0("n = ", length(x)))

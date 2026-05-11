@@ -352,8 +352,8 @@ display: none;
 </div>
 
 
-<div id="r-and-python-project-masters-internship" class="section level1">
-<h1>R and Python Project – Master’s Internship</h1>
+<div id="r-and-python-project-masters-internship-alizée-martin" class="section level1">
+<h1>R and Python Project – Master’s Internship Alizée Martin</h1>
 </div>
 <div id="plantar-block-and-early-gait-stability-after-hallux-valgus-surgery" class="section level1">
 <h1>Plantar block and early gait stability after hallux valgus
@@ -378,7 +378,6 @@ heel sensitivity and motor function, it may allow patients to walk early
 without affecting stability.</p>
 <p>The question is: does the plantar block allow early walking without
 affecting gait stability?</p>
-<hr />
 </div>
 <div id="aim" class="section level3">
 <h3>1.2. Aim</h3>
@@ -387,7 +386,6 @@ and a control group, in order to evaluate the impact of this technique
 on gait stability after hallux valgus surgery.</p>
 <p>The analysis is based on one main variable: the <strong>mean double
 support time</strong>, used as an indicator of stability.</p>
-<hr />
 </div>
 <div id="method" class="section level3">
 <h3>1.3. Method</h3>
@@ -399,7 +397,6 @@ Two datasets were used:</p>
 </ul>
 <p>These datasets were merged and cleaned using Python, then analyzed
 using R.</p>
-<hr />
 </div>
 <div id="participants" class="section level3">
 <h3>1.4. Participants</h3>
@@ -410,7 +407,6 @@ using R.</p>
 </li>
 <li>control group</li>
 </ul>
-<hr />
 </div>
 <div id="outcome-measure" class="section level3">
 <h3>1.5. Outcome measure</h3>
@@ -420,7 +416,6 @@ time</strong>.</p>
 ground. It is commonly used as an indicator of stability.</p>
 <p>It is calculated as the average of the left and right double support
 times.</p>
-<hr />
 </div>
 </div>
 <div id="python-project" class="section level2">
@@ -446,7 +441,6 @@ average of the left (<code>DoubleSupport_G</code>) and right
 variables (patient ID, group, surgical side and double support
 variables), and exported the final dataset (<code>results.csv</code>),
 which was used in R.</p>
-<hr />
 </div>
 <div id="data-organization" class="section level3">
 <h3>2.2. Data organization</h3>
@@ -465,7 +459,6 @@ which was used in R.</p>
 <li><code>COMMENT</code>: data validity</li>
 </ul>
 <p>Only rows marked as <strong>VALIDE</strong> were kept.</p>
-<hr />
 </div>
 <div id="randomization-data" class="section level4">
 <h4>2.2.2. Randomization data</h4>
@@ -483,7 +476,6 @@ which was used in R.</p>
 </ul>
 <p>This variable is important because it allows comparison between
 groups.</p>
-<hr />
 </div>
 </div>
 <div id="script-organization" class="section level3">
@@ -510,7 +502,6 @@ groups.</p>
 </li>
 <li><code>DoubleSupport_mean</code></li>
 </ul>
-<hr />
 </div>
 </div>
 <div id="rstudio-project" class="section level2">
@@ -521,40 +512,57 @@ groups.</p>
 time in order to compare gait stability between the two groups.</p>
 <p>R was used for statistical analysis because it is well adapted for
 descriptive statistics, visualization and effect size calculation.</p>
-<hr />
 </div>
 <div id="data-organization-1" class="section level3">
 <h3>3.2. Data organization</h3>
-<p>File used: <code>results.csv</code></p>
-<p>Main variables:</p>
+<p>File: <code>results.csv</code></p>
+<p>Variables:</p>
 <ul>
-<li><code>NumPAT</code><br />
+<li><code>NumPAT</code> : patient ID<br />
 </li>
-<li><code>RANDOMISATION</code><br />
+<li><code>RANDOMISATION</code> : group (1 = plantar block, 2 =
+control)<br />
 </li>
-<li><code>DoubleSupport_mean</code></li>
+<li><code>CoteChir</code> : surgical side<br />
+</li>
+<li><code>DoubleSupport_G</code> : left double support time<br />
+</li>
+<li><code>DoubleSupport_D</code> : right double support time<br />
+</li>
+<li><code>DoubleSupport_mean</code> : mean double support time</li>
 </ul>
-<hr />
 </div>
 <div id="script-organization-1" class="section level3">
 <h3>3.3. Script organization</h3>
 <div id="descriptive-analysis" class="section level4">
 <h4>3.3.1. Descriptive analysis</h4>
-<p>Objective: describe the mean double support time for each group
-(mean, standard deviation, number of observations).</p>
-<hr />
+<ul>
+<li>Aim: describe mean double support time by group<br />
+</li>
+<li>Input: <code>results.csv</code><br />
+</li>
+<li>Output: mean, standard deviation, sample size</li>
+</ul>
 </div>
 <div id="visualization" class="section level4">
 <h4>3.3.2. Visualization</h4>
-<p>Objective: visualize the distribution of the mean double support time
-in each group using boxplots.</p>
-<hr />
+<ul>
+<li>Aim: visualize data distribution<br />
+</li>
+<li>Input: <code>results.csv</code><br />
+</li>
+<li>Output: boxplot</li>
+</ul>
 </div>
 <div id="effect-size" class="section level4">
 <h4>3.3.3. Effect size</h4>
-<p>Objective: measure the difference between groups using
-<strong>Cohen’s d</strong>.</p>
-<hr />
+<ul>
+<li>Aim: quantify difference between groups<br />
+</li>
+<li>Input: <code>results.csv</code><br />
+</li>
+<li>Output: Cohen’s d</li>
+</ul>
 </div>
 </div>
 <div id="conclusion" class="section level3">
@@ -573,12 +581,28 @@ easily.</p>
 <p>The mean double support time seems to be a good indicator to evaluate
 gait stability after surgery and could be useful for patient
 follow-up.</p>
-<hr />
 </div>
 </div>
 <div id="references" class="section level2">
 <h2>4. References</h2>
-<p>(To be completed)</p>
+<p>Herteleer, M., Choquet, O., Swisser, F., Bernard, N., Gasc, A.,
+Canovas, F., Dagneaux, L., Bringuier, S., &amp; Capdevila, X. (2024).
+<em>Plantar compartment block for hallux valgus surgery: A
+proof-of-concept anatomic and clinical study</em>. Regional Anesthesia
+and Pain Medicine. <a href="https://doi.org/10.1136/rapm-2023-105246" class="uri">https://doi.org/10.1136/rapm-2023-105246</a></p>
+<p>Swisser, F., Choquet, O., Brethe, Y., et al. (2024). <em>Plantar
+compartment block improves enhanced recovery after hallux valgus
+surgery: A randomized comparative double-blind study</em>.
+Anesthesiology. <a href="https://pubmed.ncbi.nlm.nih.gov/39102486/" class="uri">https://pubmed.ncbi.nlm.nih.gov/39102486/</a></p>
+<p>Korwin-Kochanowska, K., et al. (2020). <em>PROSPECT guideline for
+hallux valgus repair surgery: A systematic review and procedure-specific
+postoperative pain management recommendations</em>. Regional Anesthesia
+and Pain Medicine, 45(9), 702–708. <a href="https://rapm.bmj.com/content/45/9/702" class="uri">https://rapm.bmj.com/content/45/9/702</a></p>
+<p>Mazzotti, A., et al. (2024). <em>Hallux valgus plantar pressure
+distribution before and after surgery</em>. Journal of Clinical
+Medicine, 13(6). <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10970807/" class="uri">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10970807/</a></p>
+<p>Wust, M., et al. (2025). <em>Pain management after hallux valgus
+repair surgery</em>. Journal of Orthopaedic Surgery and Research. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12700695/" class="uri">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12700695/</a></p>
 </div>
 </div>
 
