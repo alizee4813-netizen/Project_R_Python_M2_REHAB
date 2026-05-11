@@ -1,10 +1,9 @@
 ---
-title: "Martin.Alizée"
-author: "Alizée"
+title: "Movement Analysis Project: Impact of Plantar Block on Gait Stability After Hallux Valgus Surgery"
+author: "Alizée Martin"
 date: "2026-05-01"
 output: 
   html_document:
-    css: style.css
     toc: true
     toc_depth: 3
 ---
@@ -19,8 +18,7 @@ knitr::opts_chunk$set(
 
 ## **0. Project accessibility**
 
-The project is available on GitHub at this link: 
-
+The project is available on GitHub at this link : 
 
 ## **1. Scientific problem**
 
@@ -57,7 +55,6 @@ Patients were divided into two groups:
 
 - plantar block group  
 - control group  
-
 
 ### 1.5. Outcome measure
 
@@ -168,7 +165,7 @@ ggplot(df, aes(x = Group, y = DoubleSupport_mean, fill = Group)) +
   geom_jitter(width = 0.1, size = 2, alpha = 0.6) +
   stat_summary(fun = mean, geom = "point", shape = 18, size = 4, color = "red") +
   
-  # add number of observations as text above each box
+  # Add number of observations as text above each box
   stat_summary(
     fun.data = function(x) {
       data.frame(y = max(x) + 0.2, label = paste0("n = ", length(x)))
