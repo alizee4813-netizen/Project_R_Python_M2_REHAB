@@ -1,0 +1,330 @@
+---
+title: "Martin.Alizée"
+author: "Alizée"
+date: "2026-05-01"
+output: 
+  html_document:
+    css: style.css
+    toc: true
+    toc_depth: 3
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE
+)
+```
+
+## **0. Project accessibility**
+
+The project is available on GitHub at this link: 
+
+
+## **1. Scientific problem**
+
+### 1.1. Context
+
+### 1.1. Context
+
+Hallux valgus surgery is more and more done in an outpatient setting and follows ERAS (Enhanced Recovery After Surgery) protocols. In this context, early walking is very important because it helps patients become independent again and reduces complications linked to immobility.
+
+Peripheral nerve blocks are often used to improve pain after surgery. However, depending on how they spread, some techniques can affect sensation or motor function, which may slow down walking recovery. In particular, a loss of foot sensitivity can affect weight-bearing and gait stability.
+
+The **plantar block** is a locoregional anesthesia technique that targets the sensory nerves of the foot. By preserving heel sensitivity and motor function, it may allow patients to walk early without affecting stability.
+
+The question is: does the plantar block allow early walking without affecting gait stability?
+
+### 1.2. Aim
+
+The aim of this project is to compare a group with a plantar block and a control group, in order to evaluate the impact of this technique on gait stability after hallux valgus surgery.
+
+The analysis is based on one main variable: the **mean double support time**, used as an indicator of stability.
+
+### 1.3. Method
+
+Gait data were collected using the GAITERITE system.
+
+Two datasets were used:
+Equipements patients
+- gait parameters  
+- randomization data  
+
+These datasets were merged and cleaned using Python, then analyzed using R.
+
+### 1.4. Participants
+
+Patients undergoing hallux valgus surgery were included.
+
+Two groups:
+
+- Plantar block group  
+- Control group  
+
+### 1.5. Outcome measure
+
+The main variable is the **mean double support time**.
+
+It corresponds to the phase where both feet are on the ground and is used as an indicator of gait stability.
+
+## **2. Aim of the code**
+
+The objective of this code is to analyze mean double support time to compare gait stability between groups.
+
+The analysis includes:
+
+- descriptive statistics
+- data visualization
+- effect size calculation
+
+## **3. Data organization**
+
+File: `results.csv`
+
+Variables:
+
+- `NumPAT` : patient ID  
+- `RANDOMISATION` : group (1 = plantar block, 2 = control)  
+- `CoteChir` : surgical side  
+- `DoubleSupport_G` : left double support time  
+- `DoubleSupport_D` : right double support time  
+- `DoubleSupport_mean` : mean double support time  
+
+## **4. Script organization**
+
+### 4.1. Descriptive analysis
+
+- Aim: describe mean double support time by group  
+- Input: `results.csv`  
+- Output: mean, standard deviation, sample size  
+
+### 4.2. Visualization
+
+- Aim: visualize data distribution  
+- Input: `results.csv`  
+- Output: boxplot  
+
+### 4.3. Effect size
+
+- Aim: quantify difference between groups  
+- Input: `results.csv`  
+- Output: Cohen’s d  
+
+## **5. Code**
+
+### 5.1. Setup
+
+```{r}
+# Load required libraries
+library(dplyr)
+library(ggplot2)
+library(effectsize)
+```
+
+### 5.2. Load dataset
+
+```{r}
+# Import cleaned dataset from Python
+df <- read.csv("~/Project_R_Python_M2_REHAB/Rstudio_project/data/results.csv")
+```
+
+
+### 5.3. Define groups
+
+```{r}
+# Convert randomization variable into readable groups
+df$Group <- factor(df$RANDOMISATION,
+                   levels = c(1, 2),
+                   labels = c("Plantar", "Control"))
+
+table(df$Group)
+```
+
+The data were divided into two groups (Plantar and Control) to allow comparison. The table shows the number of observations in each group.
+
+### 5.4. Descriptive analysis
+
+```{r}
+# Compute descriptive statistics for each group
+df %>%
+  group_by(Group) %>%
+  summarise(
+    n = n(),
+    mean = mean(DoubleSupport_mean, na.rm = TRUE),
+    sd = sd(DoubleSupport_mean, na.rm = TRUE),
+    median = median(DoubleSupport_mean, na.rm = TRUE),
+    min = min(DoubleSupport_mean, na.rm = TRUE),
+    max = max(DoubleSupport_mean, na.rm = TRUE),
+    IQR = IQR(DoubleSupport_mean, na.rm = TRUE)
+  )
+```
+
+### 5.5. Visualization
+
+```{r}
+# Visualize distribution of mean double support time by group
+ggplot(df, aes(x = Group, y = DoubleSupport_mean, fill = Group)) +
+  geom_boxplot(alpha = 0.5, outlier.shape = NA) +
+  geom_jitter(width = 0.1, size = 2, alpha = 0.6) +
+  stat_summary(fun = mean, geom = "point", shape = 18, size = 4, color = "red") +
+  
+  # ajout du n
+  stat_summary(
+    fun.data = function(x) {
+      data.frame(y = max(x) + 0.2, label = paste0("n = ", length(x)))
+    },
+    geom = "text"
+  ) +
+  
+  labs(
+    title = "Figure 1. Mean double support time by group",
+    x = "Group",
+    y = "Mean double support time"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+#### **Interpretation of descriptive results**
+
+##### **Means**
+
+The **Plantar** group has a lower mean double support time (≈ 0.49) than the **Control** group (≈ 1.16).  
+This suggests a more dynamic gait in the Plantar group.
+
+##### **Standard deviation**
+
+The standard deviation is lower in the Plantar group (≈ 0.15) than in the Control group (≈ 0.68).  
+This means the values are more consistent in the Plantar group, while the Control group shows more variability.
+
+##### **Median**
+
+The median is lower in the Plantar group (≈ 0.47) than in the Control group (≈ 0.87).  
+This confirms that the difference between groups is general and not only due to extreme values.
+
+##### **Extreme values**
+
+The Control group shows much higher maximum values (up to ≈ 2.72) than the Plantar group (≈ 0.98).  
+This means that some patients in the Control group have very high double support times.
+
+##### **Interquartile Range (IQR)**
+
+The IQR is lower in the Plantar group (≈ 0.13) than in the Control group (≈ 0.67).  
+This shows that the data are more concentrated in the Plantar group and more spread out in the Control group.
+
+##### **Conclusion**
+
+Overall, the Plantar group shows lower and more consistent values, suggesting a more fluid gait.  
+The Control group shows higher and more variable values, indicating a more cautious gait.
+
+
+```{r}
+# Save the boxplot as a PDF file
+ggsave(
+  paste0("~/Project_R_Python_M2_REHAB/Rstudio_project/figures/figure1_boxplot.pdf"),
+  width = 8,
+  height = 6
+)
+```
+
+### 5.6. Effect size
+
+```{r}
+# Compute effect size (Cohen’s d) between groups
+cohens_d(DoubleSupport_mean ~ Group, data = df)
+```
+#### **Interpretation of effect size**
+
+- d ≈ 0.2 → small effect  
+- d ≈ 0.5 → medium effect  
+- d ≥ 0.8 → large effect  
+
+The effect size (Cohen’s d) is **-1.37**, with a 95% confidence interval of **[-1.94 ; -0.78]**.
+
+In absolute value, this corresponds to a **large effect size** (|d| > 0.8), indicating a strong difference between the two groups.
+
+The negative sign indicates that the **Plantar group has lower mean values** of double support time compared to the Control group.
+
+The confidence interval does not include 0, which suggests that this difference is **robust and statistically meaningful**.
+
+From a clinical perspective, this result suggests that the plantar block is associated with a **substantial reduction in double support time**, which may reflect a more dynamic and less compensatory gait pattern.
+
+Overall, the magnitude of the effect supports the idea that the difference between groups is not only visible, but also **relevant in practice**.
+
+### 5.7. Mean plot with error bars
+
+```{r}
+# Prepare summary data for visualization (mean and confidence intervals)
+df_summary <- df %>%
+  group_by(Group) %>%
+  summarise(
+    mean = mean(DoubleSupport_mean, na.rm = TRUE),
+    sd = sd(DoubleSupport_mean, na.rm = TRUE),
+    n = n(),
+    se = sd / sqrt(n),
+    ci_low = mean - 1.96 * se,
+    ci_high = mean + 1.96 * se
+  )
+# Create plot showing mean and 95% confidence intervals
+p <- ggplot(df_summary, aes(x = Group, y = mean, fill = Group)) +
+  geom_col(alpha = 0.6, width = 0.5) +
+  geom_errorbar(aes(ymin = ci_low, ymax = ci_high), width = 0.15) +
+  geom_point(size = 3) +
+  annotate("text", x = 1.5, y = max(df_summary$ci_high) + 0.2,
+           label = "Cohen's d = -1.37", size = 5) +
+  labs(
+    title = "Figure 2. Mean double support time with 95% CI",
+    subtitle = "Visual representation of group difference (Cohen's d)",
+    x = "Group",
+    y = "Mean double support time"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+# Display plot
+p
+
+```
+
+#### **Interpretation of Figure 2 (means and confidence intervals)**
+
+The figure shows a clear difference between the two groups, with a lower mean in the Plantar group (≈ 0.49) compared to the Control group (≈ 1.16).
+
+The confidence intervals are narrower in the Plantar group, while they are wider in the Control group, indicating greater variability in the latter.
+
+Overall, the figure highlights a more homogeneous Plantar group and a more dispersed Control group.
+
+```{r}
+# Save the plot as a PDF file
+ggsave(
+  paste0("~/Project_R_Python_M2_REHAB/Rstudio_project/figures/figure2_cohens_d.pdf"),
+  plot = p,
+  width = 8,
+  height = 6
+)
+```
+
+## **6. Conclusion**
+
+The results show a clear difference between the two groups.
+
+The Plantar group has a lower mean double support time (≈ 0.49 s) compared to the Control group (≈ 1.16 s). The values are also more consistent in the Plantar group (sd ≈ 0.15; IQR ≈ 0.13), while the Control group shows more variability (sd ≈ 0.68; IQR ≈ 0.67) and higher values.
+
+The figures confirm this difference, with a more concentrated distribution in the Plantar group and a more dispersed one in the Control group.
+
+The effect size is large (Cohen’s d = -1.37), showing that the difference between groups is important.
+
+As double support time is expressed in seconds, these results suggest that the plantar block is associated with a more dynamic and potentially more stable gait.
+
+## **7. References**
+
+Herteleer, M., Choquet, O., Swisser, F., Bernard, N., Gasc, A., Canovas, F., Dagneaux, L., Bringuier, S., & Capdevila, X. (2024). *Plantar compartment block for hallux valgus surgery: A proof-of-concept anatomic and clinical study*. Regional Anesthesia and Pain Medicine. https://doi.org/10.1136/rapm-2023-105246
+
+Swisser, F., Choquet, O., Brethe, Y., et al. (2024). *Plantar compartment block improves enhanced recovery after hallux valgus surgery: A randomized comparative double-blind study*. Anesthesiology. https://pubmed.ncbi.nlm.nih.gov/39102486/
+
+Korwin-Kochanowska, K., et al. (2020). *PROSPECT guideline for hallux valgus repair surgery: A systematic review and procedure-specific postoperative pain management recommendations*. Regional Anesthesia and Pain Medicine, 45(9), 702–708. https://rapm.bmj.com/content/45/9/702
+
+Mazzotti, A., et al. (2024). *Hallux valgus plantar pressure distribution before and after surgery*. Journal of Clinical Medicine, 13(6). https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10970807/
+
+Wust, M., et al. (2025). *Pain management after hallux valgus repair surgery*. Journal of Orthopaedic Surgery and Research. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12700695/
