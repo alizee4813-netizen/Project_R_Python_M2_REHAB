@@ -142,7 +142,7 @@ The data were divided into two groups (Plantar and Control) to allow comparison.
 ### 5.4. Descriptive analysis
 
 ```{r}
-# Compute descriptive statistics for each group
+# do descriptive statistics by group
 df %>%
   group_by(Group) %>%
   summarise(
