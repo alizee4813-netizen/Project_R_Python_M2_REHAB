@@ -111,8 +111,10 @@ Variables:
 
 ### 5.1. Setup
 
+
+
 ```{r}
-# Load required libraries
+# Load required libraries : if you have not installed the required libraries yet, you need to install them first.
 library(dplyr)
 library(ggplot2)
 library(effectsize)
@@ -121,8 +123,8 @@ library(effectsize)
 ### 5.2. Load dataset
 
 ```{r}
-# Import cleaned dataset from Python
-df <- read.csv("~/Project_R_Python_M2_REHAB/Rstudio_project/data/results.csv")
+# Import clean dataset from Python
+df <- read.csv("../Python_project/clean_data/results.csv")
 ```
 
 
@@ -230,6 +232,7 @@ ggsave(
 # Compute effect size (Cohen’s d) between groups
 cohens_d(DoubleSupport_mean ~ Group, data = df)
 ```
+
 #### **Interpretation of effect size**
 
 - d ≈ 0.2 → small effect  
